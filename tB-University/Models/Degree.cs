@@ -18,4 +18,16 @@ public class Degree
     [Display(Name="Logotipo do curso")]
     [StringLength(50)]
     public string? LogoType { get; set; } = string.Empty;
+    
+    /*
+     * Relacionamento 1-N
+     * Degree - Courses(UC)
+     */
+    public ICollection<Course> Courses { get; set; } = [];
+    
+    /*
+     * Relacionamento 1-N
+     * Degree - Students 
+     */
+    public ICollection<Student> Students { get; set; } = [];
 }

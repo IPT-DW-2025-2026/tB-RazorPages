@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace tB_University.Models;
 
@@ -21,4 +23,24 @@ public class Course
     [Display(Name = "Semestre")]
     public int? Semester { get; set; }
     
+    /*
+     * Relacionamento 1-N
+     * Degree - Course(UC)
+     */
+    [ForeignKey(nameof(Degree))]
+    public int DegreeFk { get; set; }
+    [ValidateNever]
+    public Degree Degree { get; set; }
+    
+    /* 
+    * Relacionamento N-M
+    * Course(UC) - Teacher
+    */ 
+    public ICollection<Teacher> Teachers { get; set; }  = [];
+    
+    /*
+     * Relacionamento N-M, com especificação da tabela intermédia
+     * Student - Course(UC)
+     */
+    public ICollection<Registration> Registrations { get; set; } = [];
 }

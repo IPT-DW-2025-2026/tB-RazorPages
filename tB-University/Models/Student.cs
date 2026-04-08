@@ -1,5 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 
 namespace tB_University.Models;
@@ -18,4 +20,20 @@ public class Student : MyUser
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
     [DataType(DataType.Date)]
     public DateTime RegistrationDate { get; set; } = DateTime.Now;
+    
+    /*
+     * Relacionamento 1-N
+     * Degree - Student
+     */
+    [ForeignKey(nameof(Degree))]
+    public int DegreeFk { get; set; }
+    
+    [ValidateNever]
+    public Degree Degree { get; set; }
+    
+    /*
+     * Relacionamento N-M, com especificação da tabela intermédia
+     * Student - Course(UC)
+     */
+    public ICollection<Registration> Registrations { get; set; } = [];
 }
