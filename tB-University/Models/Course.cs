@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace tB_University.Models;
 
+/// <summary>
+/// Esta classe implementa a lógica por detrás das Unidades Curriculares
+/// </summary>
 public class Course
 {
     [Key]

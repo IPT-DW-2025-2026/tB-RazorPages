@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace tB_University.Models;
 
+/// <summary>
+/// Esta classe implementa a lógica por detrás de um curso, seja uma licenciatura/mestrado/tesp
+/// </summary>
 public class Degree
 {
     [Key]
