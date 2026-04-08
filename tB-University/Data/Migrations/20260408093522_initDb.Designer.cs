@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tB_University.Data;
 
@@ -10,27 +11,14 @@ using tB_University.Data;
 namespace tB_University.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260408093522_initDb")]
+    partial class initDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
-
-            modelBuilder.Entity("CourseTeacher", b =>
-                {
-                    b.Property<int>("CoursesId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TeachersId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("CoursesId", "TeachersId");
-
-                    b.HasIndex("TeachersId");
-
-                    b.ToTable("CourseTeacher");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -237,9 +225,6 @@ namespace tB_University.Data.Migrations
                     b.Property<int?>("CurricularYear")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DegreeFk")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -249,8 +234,6 @@ namespace tB_University.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DegreeFk");
 
                     b.ToTable("Courses");
                 });
@@ -314,18 +297,14 @@ namespace tB_University.Data.Migrations
 
             modelBuilder.Entity("tB_University.Models.Registration", b =>
                 {
-                    b.Property<int>("StudentFk")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CourseFk")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("StudentFk", "CourseFk");
-
-                    b.HasIndex("CourseFk");
+                    b.HasKey("Id");
 
                     b.ToTable("Registrations");
                 });
@@ -333,9 +312,6 @@ namespace tB_University.Data.Migrations
             modelBuilder.Entity("tB_University.Models.Student", b =>
                 {
                     b.HasBaseType("tB_University.Models.MyUser");
-
-                    b.Property<int>("DegreeFk")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("TEXT");
@@ -347,8 +323,6 @@ namespace tB_University.Data.Migrations
                         .HasPrecision(8, 2)
                         .HasColumnType("TEXT");
 
-                    b.HasIndex("DegreeFk");
-
                     b.HasDiscriminator().HasValue("Student");
                 });
 
@@ -357,21 +331,6 @@ namespace tB_University.Data.Migrations
                     b.HasBaseType("tB_University.Models.MyUser");
 
                     b.HasDiscriminator().HasValue("Teacher");
-                });
-
-            modelBuilder.Entity("CourseTeacher", b =>
-                {
-                    b.HasOne("tB_University.Models.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tB_University.Models.Teacher", null)
-                        .WithMany()
-                        .HasForeignKey("TeachersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -423,64 +382,6 @@ namespace tB_University.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("tB_University.Models.Course", b =>
-                {
-                    b.HasOne("tB_University.Models.Degree", "Degree")
-                        .WithMany("Courses")
-                        .HasForeignKey("DegreeFk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Degree");
-                });
-
-            modelBuilder.Entity("tB_University.Models.Registration", b =>
-                {
-                    b.HasOne("tB_University.Models.Course", "Course")
-                        .WithMany("Registrations")
-                        .HasForeignKey("CourseFk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tB_University.Models.Student", "Student")
-                        .WithMany("Registrations")
-                        .HasForeignKey("StudentFk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("tB_University.Models.Student", b =>
-                {
-                    b.HasOne("tB_University.Models.Degree", "Degree")
-                        .WithMany("Students")
-                        .HasForeignKey("DegreeFk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Degree");
-                });
-
-            modelBuilder.Entity("tB_University.Models.Course", b =>
-                {
-                    b.Navigation("Registrations");
-                });
-
-            modelBuilder.Entity("tB_University.Models.Degree", b =>
-                {
-                    b.Navigation("Courses");
-
-                    b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("tB_University.Models.Student", b =>
-                {
-                    b.Navigation("Registrations");
                 });
 #pragma warning restore 612, 618
         }
