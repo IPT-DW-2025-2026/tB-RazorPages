@@ -46,7 +46,8 @@ namespace tB_University.Pages.Degrees
                 if (DegreePhoto.ContentType != CustomValidationFile.FileContentTypeJpg &&
                     DegreePhoto.ContentType != CustomValidationFile.FileContentTypePng)
                 {
-                    throw new Exception("Exception ao conectar à BD");
+                    // exemplo de exception que pode ser apanhada no try catch
+                    //throw new Exception("Exception ao conectar à BD");
                     ModelState.AddModelError("DegreePhoto", "O ficheiro tem de ser jpg ou png");
                 }
             
