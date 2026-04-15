@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using tB_University.Data;
 using tB_University.Models;
+using tB_University.ValidationClasses;
 
 namespace tB_University.Pages.Degrees
 {
@@ -37,12 +38,13 @@ namespace tB_University.Pages.Degrees
             {
                 // VALIDAÇÕES CUSTOM
                 // 10000000 é o equivalente a 10MB
-                if (DegreePhoto.Length > 10000000)
+                if (DegreePhoto.Length > CustomValidationFile.MaxFileSize)
                 {
                     ModelState.AddModelError("DegreePhoto", "O ficheiro não pode ter mais de 10 bytes");
                 }
 
-                if (DegreePhoto.ContentType != "image/jpeg" && DegreePhoto.ContentType != "image/png")
+                if (DegreePhoto.ContentType != CustomValidationFile.FileContentTypeJpg &&
+                    DegreePhoto.ContentType != CustomValidationFile.FileContentTypePng)
                 {
                     throw new Exception("Exception ao conectar à BD");
                     ModelState.AddModelError("DegreePhoto", "O ficheiro tem de ser jpg ou png");
