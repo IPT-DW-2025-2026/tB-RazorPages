@@ -27,18 +27,44 @@ namespace tB_University.Pages.Degrees
         [BindProperty]
         public Degree Degree { get; set; } = default!;
 
+        [BindProperty]
+        public IFormFile DegreePhoto { get; set; } = null;
+        
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            try
             {
+                // VALIDAÇÕES CUSTOM
+                // 10000000 é o equivalente a 10MB
+                if (DegreePhoto.Length > 10000000)
+                {
+                    ModelState.AddModelError("DegreePhoto", "O ficheiro não pode ter mais de 10 bytes");
+                }
+
+                if (DegreePhoto.ContentType != "image/jpeg" && DegreePhoto.ContentType != "image/png")
+                {
+                    throw new Exception("Exception ao conectar à BD");
+                    ModelState.AddModelError("DegreePhoto", "O ficheiro tem de ser jpg ou png");
+                }
+            
+            
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
+
+                _context.Degrees.Add(Degree);
+                await _context.SaveChangesAsync();
+
+                return RedirectToPage("./Index");
+            }
+            catch (Exception e)
+            {   
+                ModelState.AddModelError("", "Erro ao processar o pedido, por favor tente mais tarde");
                 return Page();
             }
-
-            _context.Degrees.Add(Degree);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            
         }
     }
 }
