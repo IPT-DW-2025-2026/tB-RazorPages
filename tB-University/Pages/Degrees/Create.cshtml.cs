@@ -50,7 +50,34 @@ namespace tB_University.Pages.Degrees
                     //throw new Exception("Exception ao conectar à BD");
                     ModelState.AddModelError("DegreePhoto", "O ficheiro tem de ser jpg ou png");
                 }
-            
+                
+                // se chegamos aqui, existe um ficheiro válido que queremos guardar
+                
+                // gerar nome imagem
+                Guid g = Guid.NewGuid();
+                // atrás do nome adicionamos a pasta onde a escrevemos
+                string nomeImagem = g.ToString();
+                string extensaoImagem = Path.GetExtension(DegreePhoto.FileName).ToLowerInvariant();
+                nomeImagem += extensaoImagem;
+                // guardar o nome do ficheiro na BD
+                Degree.LogoType = CustomValidationFile.ImageFolder + "/" + nomeImagem;
+
+                // se existe uma imagem para escrever no disco
+                // vai construir o path para o diretório onde são guardadas as imagens
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/"+CustomValidationFile.ImageFolder);
+
+                // antes de escrevermos o ficheiro, vemos se o diretório existe
+                if (!Directory.Exists(filePath))
+                    Directory.CreateDirectory(filePath);
+
+                // atualizamos o Path para incluir o nome da imagem
+                filePath = Path.Combine(filePath, nomeImagem);
+
+                // escreve a imagem
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await DegreePhoto.CopyToAsync(fileStream);
+                }
             
                 if (!ModelState.IsValid)
                 {
