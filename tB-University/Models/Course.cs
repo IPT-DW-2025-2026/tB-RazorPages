@@ -28,6 +28,7 @@ public class Course
      * Degree - Course(UC)
      */
     [ForeignKey(nameof(Degree))]
+    [Display(Name = "Curso")]
     public int DegreeFk { get; set; }
     [ValidateNever]
     public Degree Degree { get; set; }

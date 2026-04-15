@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Pages\Courses\" />
       <Folder Include="Pages\Degrees\" />
       <Folder Include="wwwroot\imagens\" />
     </ItemGroup>
