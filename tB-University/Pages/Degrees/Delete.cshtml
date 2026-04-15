@@ -22,7 +22,14 @@
             @Html.DisplayNameFor(model => model.Degree.LogoType)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Degree.LogoType)
+            @if (string.IsNullOrEmpty(Model.Degree.LogoType))
+            {
+                
+            }
+            else
+            {
+                <image width="100px" src="/@Model.Degree.LogoType"/>
+            }
         </dd>
     </dl>
     

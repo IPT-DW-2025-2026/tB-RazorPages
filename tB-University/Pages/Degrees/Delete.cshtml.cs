@@ -52,6 +52,17 @@ namespace tB_University.Pages.Degrees
             if (degree != null)
             {
                 Degree = degree;
+                
+                // apagar a imagem associada
+                // apagar o ficheiro antigo
+                var oldFilePath = Path.Combine(
+                    Directory.GetCurrentDirectory(), 
+                    @"wwwroot",
+                    Degree.LogoType);
+                
+                if (System.IO.File.Exists(oldFilePath) )
+                    System.IO.File.Delete(oldFilePath);
+                
                 _context.Degrees.Remove(Degree);
                 await _context.SaveChangesAsync();
             }

@@ -50,7 +50,14 @@ namespace tB_University.Pages.Degrees
                     //throw new Exception("Exception ao conectar à BD");
                     ModelState.AddModelError("DegreePhoto", "O ficheiro tem de ser jpg ou png");
                 }
+            
+                // validação de erros
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
                 
+                // guardar ficheiro
                 // se chegamos aqui, existe um ficheiro válido que queremos guardar
                 
                 // gerar nome imagem
@@ -77,11 +84,6 @@ namespace tB_University.Pages.Degrees
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await DegreePhoto.CopyToAsync(fileStream);
-                }
-            
-                if (!ModelState.IsValid)
-                {
-                    return Page();
                 }
 
                 _context.Degrees.Add(Degree);
