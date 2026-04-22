@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tB-University", "tB-University\tB-University.csproj", "{14D19564-C405-4EF5-A0B5-7AC3DE16EC76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationAPI", "WebApplicationAPI\WebApplicationAPI.csproj", "{4478AACD-BAE0-4A16-BC98-16D5F669FDFD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{14D19564-C405-4EF5-A0B5-7AC3DE16EC76} = {14D19564-C405-4EF5-A0B5-7AC3DE16EC76}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +17,9 @@ Global
 		{14D19564-C405-4EF5-A0B5-7AC3DE16EC76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14D19564-C405-4EF5-A0B5-7AC3DE16EC76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14D19564-C405-4EF5-A0B5-7AC3DE16EC76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4478AACD-BAE0-4A16-BC98-16D5F669FDFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4478AACD-BAE0-4A16-BC98-16D5F669FDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4478AACD-BAE0-4A16-BC98-16D5F669FDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4478AACD-BAE0-4A16-BC98-16D5F669FDFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
