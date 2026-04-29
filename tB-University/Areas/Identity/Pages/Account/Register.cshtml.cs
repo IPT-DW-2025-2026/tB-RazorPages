@@ -150,6 +150,13 @@ namespace tB_University.Areas.Identity.Pages.Account
                     // temos de a ligar à entrada na nossa tabela
                     Input.StudentDetails.UserId = Input.Email;
                     Input.StudentDetails.StudentNumber = Random.Shared.Next(1,1000);
+                    // popular campo da BD com tuitionfee
+                    if (Input.StudentDetails.TuitionFeeAux.Contains("."))
+                    {
+                        Input.StudentDetails.TuitionFeeAux = Input.StudentDetails.TuitionFeeAux.Replace(".", ",");
+                    }
+                    
+                    Input.StudentDetails.TuitionFee = decimal.Parse(Input.StudentDetails.TuitionFeeAux);
                     
                     _context.Students.Add(Input.StudentDetails);
                     await _context.SaveChangesAsync();

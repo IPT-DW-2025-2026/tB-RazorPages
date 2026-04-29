@@ -15,7 +15,7 @@ namespace tB_University.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
 
             modelBuilder.Entity("CourseTeacher", b =>
                 {
@@ -29,7 +29,7 @@ namespace tB_University.Data.Migrations
 
                     b.HasIndex("TeachersId");
 
-                    b.ToTable("CourseTeacher");
+                    b.ToTable("CourseTeacher", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -252,7 +252,7 @@ namespace tB_University.Data.Migrations
 
                     b.HasIndex("DegreeFk");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("tB_University.Models.Degree", b =>
@@ -272,7 +272,7 @@ namespace tB_University.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Degrees");
+                    b.ToTable("Degrees", (string)null);
                 });
 
             modelBuilder.Entity("tB_University.Models.MyUser", b =>
@@ -305,9 +305,9 @@ namespace tB_University.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MyUsers");
+                    b.ToTable("MyUsers", (string)null);
 
-                    b.HasDiscriminator().HasValue("MyUser");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("MyUser");
 
                     b.UseTphMappingStrategy();
                 });
@@ -327,7 +327,7 @@ namespace tB_University.Data.Migrations
 
                     b.HasIndex("CourseFk");
 
-                    b.ToTable("Registrations");
+                    b.ToTable("Registrations", (string)null);
                 });
 
             modelBuilder.Entity("tB_University.Models.Student", b =>

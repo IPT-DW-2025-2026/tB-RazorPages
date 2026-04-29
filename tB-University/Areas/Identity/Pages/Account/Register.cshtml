@@ -46,6 +46,11 @@
                 <select asp-for="Input.StudentDetails.DegreeFk" class ="form-control" asp-items="ViewBag.DegreeFk" ></select>
                 <label asp-for="Input.StudentDetails.DegreeFk">Escolha um curso </label>
             </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.StudentDetails.TuitionFeeAux" class="form-control" />
+                <label asp-for="Input.StudentDetails.TuitionFeeAux">Insira o valor das propinas </label>
+                <span asp-validation-for="Input.StudentDetails.TuitionFeeAux" class="text-danger"></span>
+            </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>

@@ -16,6 +16,16 @@ public class Student : MyUser
     [Precision(8,2)]
     public decimal TuitionFee { get; set; }
     
+    /// <summary>
+    /// campo auxiliar usado para popular TuitionFee 
+    /// </summary>
+    [NotMapped]
+    [Display(Name = "Valor da Propina")]
+    [RegularExpression("[0-9]{1,6}(.|,)[0-9]{1,2}", 
+        ErrorMessage = "O {0} deve apenas conter um ponto ou vírgula entre a unidade e os decimais. " +
+                       "O formato deve seguir nnnnnn,dd ou nnnnnn.dd")]
+    public string TuitionFeeAux { get; set; }
+    
     [Display(Name = "Data de Matrícula")]
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
     [DataType(DataType.Date)]
