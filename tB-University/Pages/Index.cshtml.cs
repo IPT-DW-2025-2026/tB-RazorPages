@@ -7,5 +7,6 @@ public class IndexModel : PageModel
 {
     public void OnGet()
     {
+        var i = User.Identity.Name;
     }
 }

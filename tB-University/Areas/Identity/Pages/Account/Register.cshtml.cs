@@ -16,8 +16,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using tB_University.Data;
+using tB_University.Models;
 
 namespace tB_University.Areas.Identity.Pages.Account
 {
@@ -29,13 +32,15 @@ namespace tB_University.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +48,7 @@ namespace tB_University.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -97,6 +103,11 @@ namespace tB_University.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            
+            /// <summary>
+            ///     Classe abaixo usada para guardar atributos adicionais não presentes na tabela AspNetUsers
+            /// </summary
+            public Student StudentDetails { get; set; }
         }
 
 
@@ -104,6 +115,7 @@ namespace tB_University.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ViewData["DegreeFk"] = new SelectList(_context.Degrees, "Id", "Name");
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -134,6 +146,14 @@ namespace tB_University.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                    // se chegarmos a este ponto, sabemos que a entrada na tabela de aspnetusers foi criada com sucesso
+                    // temos de a ligar à entrada na nossa tabela
+                    Input.StudentDetails.UserId = Input.Email;
+                    Input.StudentDetails.StudentNumber = Random.Shared.Next(1,1000);
+                    
+                    _context.Students.Add(Input.StudentDetails);
+                    await _context.SaveChangesAsync();
+                    
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
@@ -151,6 +171,7 @@ namespace tB_University.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+            ViewData["DegreeFk"] = new SelectList(_context.Degrees, "Id", "Name");
             return Page();
         }
 

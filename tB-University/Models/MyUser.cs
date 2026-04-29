@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace tB_University.Models;
 
@@ -28,5 +29,6 @@ public class MyUser
     ///     e a tabela de Autenticacao do Identity
     /// </summary>
     [StringLength(50)]
+    [ValidateNever]
     public string UserId { get; set; } = null!;
 }
