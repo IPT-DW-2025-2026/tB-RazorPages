@@ -5,3 +5,10 @@
 <p>
     <a asp-page="Create">Criar nova inscrição</a>
 </p>
+
+@foreach (var item in Model.ListaInscricoes) {
+    <div class="row">
+        <div class="col-3">Aluno @item.Student.Name</div>
+        <div class="col-3">Curso @item.Course.Name</div>
+    </div>
+}

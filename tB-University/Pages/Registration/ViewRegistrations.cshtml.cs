@@ -17,11 +17,15 @@ public class ViewRegistrations : PageModel
     }
 
     // Variaveis de Leitura
-    public List<tB_University.Models.Registration> listaInscricoes = [];
+    public List<tB_University.Models.Registration> ListaInscricoes = [];
     
     public async Task<IActionResult> OnGet()
     {
-        listaInscricoes = _context.Registrations
+        // 1- ter o id da tabela MyUsers
+        // 2- adicionar uma clausula where À lista
+        var something = User.Identity.Name;
+
+        ListaInscricoes = _context.Registrations
             .Include(r => r.Student)
             .Include(r => r.Course)
             .ToList();
