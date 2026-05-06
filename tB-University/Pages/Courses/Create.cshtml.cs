@@ -43,7 +43,7 @@ namespace tB_University.Pages.Courses
                 return Page();
             }
             var AnoAuxArray =  AnoAux?.Split('/');
-            Course.CurricularYear = Convert.ToInt32(AnoAuxArray[0]);
+            //Course.CurricularYear = Convert.ToInt32(AnoAuxArray[0]);
 
             _context.Courses.Add(Course);
             await _context.SaveChangesAsync();
