@@ -39,7 +39,7 @@ namespace tB_University.Pages.Degrees
             {
                 return NotFound();
             }
-            //HttpContext.Session.SetString("Degree", degree.Name);
+            HttpContext.Session.SetInt32("Degree", degree.Id);
             
             Degree = degree;
             return Page();
@@ -49,12 +49,12 @@ namespace tB_University.Pages.Degrees
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            /*var nomeAntigoDaBd = HttpContext.Session.GetString("Degree");
-            if (Degree.Name != nomeAntigoDaBd)
+            var idAntigo = HttpContext.Session.GetInt32("Degree");
+            if (Degree.Id != idAntigo)
             {
-                ModelState.AddModelError("", "Não é possível alterar o nome do curso depois de criado");
+                return RedirectToPage("./Index");
             }
-            */
+            
             // foi submetido um ficheiro para logotipo?
             if (DegreePhoto != null)
             {
